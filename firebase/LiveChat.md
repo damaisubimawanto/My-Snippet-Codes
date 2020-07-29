@@ -136,7 +136,7 @@ class LiveFragment : BaseFragment() {
         isFirstRequestSnapshot = true
 
         val realtimeRequest = db.collection(chatName)
-                .orderBy(ChatColumn.TIME_MILLIS.columnName, Query.Direction.DESCENDING)
+                .orderBy("ts", Query.Direction.DESCENDING)
                 .limit(1)
 
         chatListener = realtimeRequest.addSnapshotListener { value, e ->
