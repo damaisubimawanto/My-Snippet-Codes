@@ -177,3 +177,71 @@ class LiveFragment : BaseFragment() {
     }
 }
 ```
+
+# Send Chat to API
+We use Retrofit as the implementation of HTTP/HTTPS connection to our API.
+
+### RetrofitInterface.kt
+```kotlin
+interface RetrofitInterface {
+    @POST("/api/v1/chat/{channelId}")
+    fun postLiveChat(@Path("channelId") channelId: Int, @Body bodyRequest: LiveChatRequestModel) : Call<BlockChatModel>
+}
+```
+
+### Your Presenter Model View or Wherever You Want to Put It :)
+```kotlin
+fun postLiveChat(channelId: Int, userName: String, profilePicture: String, chatMessage: String) {
+    val requestBody = LiveChatRequestModel()
+    requestBody.user = userName
+    requestBody.avatar = profilePicture
+    requestBody.message = chatMessage
+
+    val request = retrofitInterface.postLiveChat(channelId, requestBody)
+    request.enqueue(object : Callback<BlockChatModel> {
+        override fun onResponse(call: Call<BlockChatModel>, response: Response<BlockChatModel>) {
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody?.status?.code == 0) {
+                    /* Success to send the chat */
+                } else {
+                    /* Fail to send the chat */
+                }
+            } else {
+                /* Fail to send the chat */
+            }
+        }
+
+        override fun onFailure(call: Call<BlockChatModel>, t: Throwable) {
+            /* Fail to send the chat: network error or invalid JSON to POJO model */
+        }
+    })
+}
+```
+
+### LiveChatRequestModel.kt
+```kotlin
+class LiveChatRequestModel {
+    @SerializedName("user")
+    var user: String? = null
+
+    @SerializedName("avatar")
+    var avatar: String? = null
+
+    @SerializedName("msg")
+    var message: String? = null
+}
+```
+
+### BlockChatModel.kt
+```kotlin
+class BlockChatModel : BaseResponse() {
+    @SerializedName("data")
+    var data: Data? = null
+    
+    class Data {
+        @SerializedName("days")
+        var days: Int = 0
+    }
+}
+```
