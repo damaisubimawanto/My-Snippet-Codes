@@ -40,7 +40,7 @@ HlsDwld.getVideoRes(
     }
 }
 ```
-Variable `envDir` merupakan path folder yang akan digunakan untuk menampung seluruh file dan sub-file dari video-video yang akan diunduh. Saya menyarankan sih pakai `getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)` dikarenakan folder internal aplikasi ini tidak akan muncul di Gallery dan isi foldernya akan terhapus otomatis ketika user meng-uninstall aplikasi sehingga memory storage user akan kembali lega (ini dulu pernah dapet komplen dari user, boss! makanya kita buat seperti ini hehe). LANJUT!
+Variable `envDir` merupakan path folder yang akan digunakan untuk menampung seluruh file dan sub-file dari video-video yang akan diunduh. Saya menyarankan sih pakai `getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)` dikarenakan folder internal aplikasi ini tidak akan muncul di Gallery dan isi foldernya akan terhapus otomatis ketika user meng-uninstall aplikasi sehingga memory storage di handphone user akan kembali lega (ini dulu sempet pernah dapet komplen dari user, boss! makanya kita buat seperti ini hehe). LANJUT!
 
 ## Save Video
 Setelah user memilih resolusi unduhan yang diinginkan, maka langkah selanjutnya adalah melakukan proses download. Berikut contoh potongan kodingannya:
@@ -54,7 +54,7 @@ val url = // ...    /* Untuk selebihnya saya ga perlu nulis ulang variable-varia
 val resolutionOption = "240p"
 val urlThumbnail = "https://abclimadasar.com/.../thumbnail.jpg"
 val title = "Dunia Terbalik"
-val extra: String? = null
+val downloadExtraJson: String? = null
 
 HlsDwld.saveVideo(
     envDir = envDir,
