@@ -149,7 +149,7 @@ if (HlsDwld.wasSavingPaused(
 ## Get Saved Videos
 Untuk dapat melihat daftar video yang telah berhasil diunduh, maka dapat dilakukan seperti di bawah ini:
 ```kotlin
-val downloadedDataJson = HlsDwld.getSavedVideosInJson(
+val downloadedDataJson: String? = HlsDwld.getSavedVideosInJson(
     envDir = envDir,
     packageName = packageName
 )
@@ -189,21 +189,25 @@ class HlsDownloadModel {
 
 Oleh karena itu, variable `downloadedDataJson` di atas harus dikonversi kembali menjadi bentuk ArrayList dari object model `HlsDownloadModel` tersebut.
 ```kotlin
-val downloadedList = Gson().fromJson<MutableList<HlsDownloadModel>>(
-    downloadedDataJson,
-    object : TypeToken<MutableList<HlsDownloadModel>>() {}.type
-)
+if (downloadedDataJson?.isNotEmpty() == true) {
+    val downloadedList = Gson().fromJson<MutableList<HlsDownloadModel>>(
+        downloadedDataJson,
+        object : TypeToken<MutableList<HlsDownloadModel>>() {}.type
+    )
+}
 ```
 
 ## Get Unsaved Videos
 Selain melihat daftar video yang berhasil terunduh, ada kalanya kita menginginkan untuk melihat daftar video yang masih belum berhasil terunduh atau daftar video yang masih gagal. Kita dapat menggunakan fungsi seperti di bawah ini:
 ```kotlin
-val resumableDownloadedDataJson = HlsDwld.getResumableVideosInJson(
+val resumableDownloadedDataJson: String? = HlsDwld.getResumableVideosInJson(
     envDir = envDir,
     packageName = packageName
 )
-val resumableDownloadList = Gson().fromJson<MutableList<HlsDownloadModel>>(
-    resumableDownloadedDataJson,
-    object : TypeToken<MutableList<HlsDownloadModel>>() {}.type
-)
+if (resumableDownloadedDataJson?.isNotEmpty() == true) {
+    val resumableDownloadList = Gson().fromJson<MutableList<HlsDownloadModel>>(
+        resumableDownloadedDataJson,
+        object : TypeToken<MutableList<HlsDownloadModel>>() {}.type
+    )
+}
 ```
