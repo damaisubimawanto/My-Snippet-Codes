@@ -148,7 +148,7 @@ if (HlsDwld.wasSavingPaused(
 
 ## Get Saved Videos
 Untuk dapat melihat daftar video yang telah berhasil diunduh, maka dapat dilakukan seperti di bawah ini:
-```kotin
+```kotlin
 val downloadedDataJson = HlsDwld.getSavedVideosInJson(
     envDir = envDir,
     packageName = packageName
